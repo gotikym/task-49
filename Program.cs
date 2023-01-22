@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 internal class Program
@@ -12,8 +12,8 @@ internal class Program
 
 class Aquarium
 {
-    private int maxNumberFish = 15;
     private List<Fish> _fishes = new List<Fish>();
+    private int MaxNumberFish = 15;
 
     public void Start()
     {
@@ -34,7 +34,7 @@ class Aquarium
                 ShowInfo();
             }
 
-            Cycle();
+            RunCycle();
 
             Console.SetCursorPosition(0, 25);
             Console.WriteLine("Чтобы добавить рыб, введите: " + CommandAddFish);
@@ -62,13 +62,13 @@ class Aquarium
 
     private void AddFish()
     {
-        if (maxNumberFish > 0)
+        if (MaxNumberFish > 0)
         {
             FishList fishList = new FishList();
             fishList.ShowFishSpecies();
-            int fishIndex = GetNumber(fishList.Count());
+            int fishIndex = GetNumber(fishList.GetCount());
             _fishes.Add(fishList.TakeFish(fishIndex));
-            maxNumberFish--;
+            MaxNumberFish--;
         }
         else
         {
@@ -96,7 +96,7 @@ class Aquarium
     {
         int numberFish = 0;
         Console.SetCursorPosition(0, 0);
-        Console.WriteLine("Мест в аквариуме: " + maxNumberFish);
+        Console.WriteLine("Мест в аквариуме: " + MaxNumberFish);
         Console.WriteLine("В аквариуме плавают: ");
 
         foreach (Fish fish in _fishes)
@@ -106,7 +106,7 @@ class Aquarium
         }
     }
 
-    private void Cycle()
+    private void RunCycle()
     {
         foreach (var fish in _fishes)
         {
@@ -163,7 +163,7 @@ class FishList
         }
     }
 
-    public int Count()
+    public int GetCount()
     {
         return _fishSpecies.Count;
     }
@@ -181,16 +181,16 @@ class FishList
 
 class Fish
 {
-    public string Status { get; protected set; }
-    public string Name { get; protected set; }
-    public int Age { get; protected set; }
-
     public Fish(string status, string name, int age)
     {
         Status = status;
         Name = name;
         Age = age;
     }
+
+    public string Status { get; protected set; }
+    public string Name { get; protected set; }
+    public int Age { get; protected set; }
 
     public string FindStatus()
     {
