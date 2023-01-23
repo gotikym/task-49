@@ -15,7 +15,6 @@ class Aquarium
     private FishCreator _fishCreator = new FishCreator();
     private List<Fish> _fishes = new List<Fish>();
     private int _maxNumberFish = 15;
-    private int _currentPlaces = 0;
 
     public void Start()
     {
@@ -64,12 +63,11 @@ class Aquarium
 
     private void AddFish()
     {
-        if (_maxNumberFish > _currentPlaces)
+        if (_maxNumberFish > _fishes.Count)
         {
             _fishCreator.ShowFishSpecies();
             int fishIndex = GetNumber(_fishCreator.GetCount());
-            _fishes.Add(_fishCreator.TakeFish(fishIndex));
-            _currentPlaces++;
+            _fishes.Add(_fishCreator.CreateFish(fishIndex));
         }
         else
         {
@@ -88,7 +86,6 @@ class Aquarium
             Console.SetCursorPosition(0, 25);
             Console.WriteLine("Чтобы достать рыбку, введите её номер");
             _fishes.RemoveAt(GetNumber(_fishes.Count));
-            _currentPlaces--;
         }
 
         Console.Clear();
@@ -97,7 +94,7 @@ class Aquarium
     private void ShowInfo()
     {
         int numberFish = 0;
-        int freePlaces = _maxNumberFish - _currentPlaces;
+        int freePlaces = _maxNumberFish - _fishes.Count;
         Console.SetCursorPosition(0, 0);
         Console.WriteLine("Мест в аквариуме: " + freePlaces);
         Console.WriteLine("В аквариуме плавают: ");
@@ -150,7 +147,7 @@ class FishCreator
         AddSpecies();
     }
 
-    public Fish TakeFish(int fishIndex)
+    public Fish CreateFish(int fishIndex)
     {
         return new Fish(_fishSpecies[fishIndex].Status, _fishSpecies[fishIndex].Name, _fishSpecies[fishIndex].Age);
     }
