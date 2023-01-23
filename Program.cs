@@ -15,8 +15,8 @@ class Aquarium
     private FishList _fishList = new FishList();
     private List<Fish> _fishes = new List<Fish>();
     private int _maxNumberFish = 15;
-    private int _numberPlaces = 15;
-    
+    private int _currentPlaces = 0;
+
     public void Start()
     {
         const string CommandExit = "exit";
@@ -64,12 +64,12 @@ class Aquarium
 
     private void AddFish()
     {
-        if (_maxNumberFish > 0)
+        if (_maxNumberFish > _currentPlaces)
         {            
             _fishList.ShowFishSpecies();
             int fishIndex = GetNumber(_fishList.GetCount());
             _fishes.Add(_fishList.TakeFish(fishIndex));
-            _numberPlaces--;
+            _currentPlaces++;
         }
         else
         {
@@ -88,7 +88,7 @@ class Aquarium
             Console.SetCursorPosition(0, 25);
             Console.WriteLine("Чтобы достать рыбку, введите её номер");
             _fishes.RemoveAt(GetNumber(_fishes.Count));
-            _numberPlaces++;
+            _currentPlaces--;
         }
 
         Console.Clear();
@@ -97,8 +97,9 @@ class Aquarium
     private void ShowInfo()
     {
         int numberFish = 0;
+        int freePlaces = _maxNumberFish - _currentPlaces;
         Console.SetCursorPosition(0, 0);
-        Console.WriteLine("Мест в аквариуме: " + _numberPlaces);
+        Console.WriteLine("Мест в аквариуме: " + freePlaces);
         Console.WriteLine("В аквариуме плавают: ");
 
         foreach (Fish fish in _fishes)
