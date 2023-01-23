@@ -12,9 +12,10 @@ internal class Program
 
 class Aquarium
 {
+    private FishList _fishList = new FishList();
     private List<Fish> _fishes = new List<Fish>();
-    private int MaxNumberFish = 15;
-
+    private int _maxNumberFish = 15;
+    private int _numberPlaces = 15;
     public void Start()
     {
         const string CommandExit = "exit";
@@ -62,13 +63,12 @@ class Aquarium
 
     private void AddFish()
     {
-        if (MaxNumberFish > 0)
-        {
-            FishList fishList = new FishList();
-            fishList.ShowFishSpecies();
-            int fishIndex = GetNumber(fishList.GetCount());
-            _fishes.Add(fishList.TakeFish(fishIndex));
-            MaxNumberFish--;
+        if (_maxNumberFish > 0)
+        {            
+            _fishList.ShowFishSpecies();
+            int fishIndex = GetNumber(_fishList.GetCount());
+            _fishes.Add(_fishList.TakeFish(fishIndex));
+            _numberPlaces--;
         }
         else
         {
@@ -87,6 +87,7 @@ class Aquarium
             Console.SetCursorPosition(0, 25);
             Console.WriteLine("Чтобы достать рыбку, введите её номер");
             _fishes.RemoveAt(GetNumber(_fishes.Count));
+            _numberPlaces++;
         }
 
         Console.Clear();
@@ -96,7 +97,7 @@ class Aquarium
     {
         int numberFish = 0;
         Console.SetCursorPosition(0, 0);
-        Console.WriteLine("Мест в аквариуме: " + MaxNumberFish);
+        Console.WriteLine("Мест в аквариуме: " + _numberPlaces);
         Console.WriteLine("В аквариуме плавают: ");
 
         foreach (Fish fish in _fishes)
