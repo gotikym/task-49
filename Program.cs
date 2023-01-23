@@ -12,7 +12,7 @@ internal class Program
 
 class Aquarium
 {
-    private FishList _fishList = new FishList();
+    private FishCreator _fishCreator = new FishCreator();
     private List<Fish> _fishes = new List<Fish>();
     private int _maxNumberFish = 15;
     private int _currentPlaces = 0;
@@ -65,10 +65,10 @@ class Aquarium
     private void AddFish()
     {
         if (_maxNumberFish > _currentPlaces)
-        {            
-            _fishList.ShowFishSpecies();
-            int fishIndex = GetNumber(_fishList.GetCount());
-            _fishes.Add(_fishList.TakeFish(fishIndex));
+        {
+            _fishCreator.ShowFishSpecies();
+            int fishIndex = GetNumber(_fishCreator.GetCount());
+            _fishes.Add(_fishCreator.TakeFish(fishIndex));
             _currentPlaces++;
         }
         else
@@ -141,18 +141,18 @@ class Aquarium
     }
 }
 
-class FishList
+class FishCreator
 {
     private List<Fish> _fishSpecies = new List<Fish>();
 
-    public FishList()
+    public FishCreator()
     {
         AddSpecies();
     }
 
     public Fish TakeFish(int fishIndex)
     {
-        return _fishSpecies[fishIndex];
+        return new Fish(_fishSpecies[fishIndex].Status, _fishSpecies[fishIndex].Name, _fishSpecies[fishIndex].Age);
     }
 
     public void ShowFishSpecies()
