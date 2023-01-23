@@ -16,6 +16,7 @@ class Aquarium
     private List<Fish> _fishes = new List<Fish>();
     private int _maxNumberFish = 15;
     private int _numberPlaces = 15;
+    
     public void Start()
     {
         const string CommandExit = "exit";
